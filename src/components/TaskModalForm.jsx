@@ -5,7 +5,7 @@ export default function TaskModalForm({
   onClose = (f) => f,
 }) {
   return (
-    <form onSubmit={onSubmit} method="dialog">
+    <form onSubmit={onSubmit}>
       <div>
         <input
           type="text"
