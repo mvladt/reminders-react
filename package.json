@@ -1,5 +1,5 @@
 {
-  "name": "react-remi-s",
+  "name": "remi-react-base",
   "scripts": {
     "dev": "vite --host"
   },
