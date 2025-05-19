@@ -51,7 +51,7 @@ export default function TaskList({ isShow = false }) {
           </li>
         ))}
         <li>
-          <button type="button" onClick={onTaskNew}>
+          <button type="button" onClick={onTaskNew} tabIndex={1}>
             Создать
           </button>
         </li>
