@@ -1,6 +1,6 @@
 import { useTasksStore } from "../stores/tasks/TasksContext.jsx";
 import { useTaskModalStore } from "../stores/taskModal/TaskModalContext.jsx";
-import { createTask } from "../tools/tasksTools.js";
+import { createTask } from "../tools/helpers.js";
 import TaskForm from "./TaskForm.jsx";
 
 export default function TaskList({ isShow = false }) {

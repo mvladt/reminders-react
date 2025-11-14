@@ -3,7 +3,6 @@ import { useRef } from "react";
 import { useTasksStore } from "../stores/tasks/TasksContext.jsx";
 import { useTaskModalStore } from "../stores/taskModal/TaskModalContext.jsx";
 import TaskModalForm from "./TaskModalForm.jsx";
-import { setupNotification } from "../tools/tasksTools.js";
 
 export default function TaskModal() {
   const { dispatch, actions, tasks } = useTasksStore();
@@ -19,9 +18,6 @@ export default function TaskModal() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
-    const previous = tasks.find((t) => t.id === task.id);
-    await setupNotification(previous, task);
 
     dispatch(actions.update(task));
     close();
