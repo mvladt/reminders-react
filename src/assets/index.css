@@ -24,3 +24,11 @@
     background-color: #ffffff;
   }
 }
+
+/* - - - */
+
+#root {
+  display: grid;
+  place-content: center;
+  min-height: 100vh;
+}
