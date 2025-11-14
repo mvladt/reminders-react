@@ -25,10 +25,10 @@ export default function TaskModalForm({
       </div>
       <div>
         <input
-          type="date"
-          id={`date-${task.id}`}
-          value={task.date}
-          onChange={(e) => onChange({ ...task, date: e.target.value })}
+          type="datetime-local"
+          id={`datetime-${task.id}`}
+          value={task.datetime}
+          onChange={(e) => onChange({ ...task, datetime: e.target.value })}
         />
       </div>
       <div>
