@@ -1,7 +1,8 @@
 {
   "name": "reminders-react",
   "scripts": {
-    "dev": "vite --host"
+    "dev": "vite --host",
+    "build:ghpages": "vite build --outDir=docs --base=reminders-react"
   },
   "dependencies": {
     "react": "^19.1.0",
