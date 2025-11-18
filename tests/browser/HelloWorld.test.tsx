@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 import { render } from "vitest-browser-react";
-import HelloWorld from "../../src/HelloWorld.jsx";
+import HelloWorld from "../../src/HelloWorld.js";
 
 test("renders name", async () => {
   const { getByText, getByRole } = await render(<HelloWorld name="Vitest" />);

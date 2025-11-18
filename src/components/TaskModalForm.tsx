@@ -1,9 +1,19 @@
+import type { FormEvent } from "react";
+import type { TaskEntity } from "../types";
+
+type Props = {
+  task: Partial<TaskEntity>;
+  onChange: (task: Partial<TaskEntity>) => void;
+  onSubmit: (event: FormEvent) => void;
+  onClose: () => void;
+};
+
 export default function TaskModalForm({
-  task = {},
-  onChange = (f) => f,
-  onSubmit = (f) => f,
-  onClose = (f) => f,
-}) {
+  task,
+  onChange,
+  onSubmit,
+  onClose,
+}: Props) {
   return (
     <form onSubmit={onSubmit}>
       <div>

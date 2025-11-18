@@ -1,16 +1,21 @@
-import { useTasksStore } from "../stores/tasks/TasksContext.jsx";
+import { useTasksStore } from "../stores/tasks/TasksContext.js";
 
-export default function TaskHeader({ isShow = false, showToggle = (f) => f }) {
+type Props = {
+  isShow: boolean;
+  showToggle(): void;
+};
+
+export default function TaskHeader({ isShow, showToggle }: Props) {
   const title = "Все";
   const { dispatch, actions, numberOfCompleted } = useTasksStore();
 
-  const onClear = () => {
+  const onClear = (): void => {
     if (confirm("Удалить все завершенные?")) {
       dispatch(actions.deleteCompletedOnes());
     }
   };
 
-  const onShowToggle = () => {
+  const onShowToggle = (): void => {
     showToggle();
   };
 
@@ -18,7 +23,7 @@ export default function TaskHeader({ isShow = false, showToggle = (f) => f }) {
     <>
       <h1>{title}</h1>
       <div>
-        <span>{numberOfCompleted} завешрены</span>•
+        <span>{numberOfCompleted} завершены</span>•
         <button type="button" onClick={onClear}>
           Очистить
         </button>

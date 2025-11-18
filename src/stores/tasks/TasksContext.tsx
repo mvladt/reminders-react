@@ -4,21 +4,37 @@ import {
   useEffect,
   useMemo,
   useReducer,
+  type ActionDispatch,
+  type PropsWithChildren,
 } from "react";
 
-import tasksActions from "./tasksActions.js";
-import tasksReducer from "./tasksReducer.js";
 import {
   getStateFromLocal,
   saveStateToLocal,
 } from "../../tools/tasksLocalStore.js";
+import tasksActions from "./tasksActions.js";
+import tasksReducer from "./tasksReducer.js";
+
+import type { TaskAction, TaskEntity } from "../../types.js";
+
+type ProvidedValue = {
+  dispatch: ActionDispatch<[TaskAction]>;
+  tasks: TaskEntity[];
+  actions: typeof tasksActions;
+  completed: TaskEntity[];
+  uncompleted: TaskEntity[];
+  numberOfCompleted: number;
+};
 
 const initialTasks = getStateFromLocal();
 
-const TasksContext = createContext();
+const TasksContext = createContext<ProvidedValue>({});
 
-export function TasksProvider({ children }) {
-  const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
+export function TasksProvider({ children }: PropsWithChildren) {
+  const [tasks, dispatch] = useReducer<TaskEntity[], [TaskAction]>(
+    tasksReducer,
+    initialTasks
+  );
 
   // Сначала незавершенные, потом завершенные.
   const sortedTasks = useMemo(
@@ -43,7 +59,7 @@ export function TasksProvider({ children }) {
 
   useEffect(() => saveStateToLocal(tasks), [tasks]);
 
-  const toProvide = {
+  const providedValue: ProvidedValue = {
     dispatch,
     tasks: sortedTasks,
     actions: tasksActions,
@@ -53,7 +69,9 @@ export function TasksProvider({ children }) {
   };
 
   return (
-    <TasksContext.Provider value={toProvide}>{children}</TasksContext.Provider>
+    <TasksContext.Provider value={providedValue}>
+      {children}
+    </TasksContext.Provider>
   );
 }
 

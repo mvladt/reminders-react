@@ -1,38 +1,33 @@
-import {
-  TYPE_CREATE,
-  TYPE_UPDATE,
-  TYPE_DELETE,
-  TYPE_DELETE_COMPLETED_ONES,
-} from "./tasksActions.js";
+import type { TaskAction, TaskEntity } from "../../types.js";
 
-const tasksReducer = (tasks, action) => {
+const tasksReducer = (tasks: TaskEntity[], action: TaskAction) => {
   switch (action.type) {
-    case TYPE_CREATE: {
+    case "create-one": {
       const creating = action.value;
       return [...tasks, creating];
     }
-    case TYPE_UPDATE: {
+    case "update-one": {
       const updating = action.value;
       return tasks.map((t) => {
         if (t.id === updating.id) return { ...t, ...updating };
         return t;
       });
     }
-    case TYPE_DELETE: {
+    case "delete-one": {
       const deleting = action.value;
       return tasks.filter((t) => {
         if (t.id === deleting.id) return false;
         return true;
       });
     }
-    case TYPE_DELETE_COMPLETED_ONES: {
+    case "delete-completed-ones": {
       return tasks.filter((t) => {
         if (t.completed) return false;
         return true;
       });
     }
     default:
-      throw new Error("Unknown action: " + action.type);
+      throw new Error("Unknown action: " + JSON.stringify(action));
   }
 };
 

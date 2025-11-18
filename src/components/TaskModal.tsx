@@ -1,23 +1,24 @@
-import { useRef } from "react";
+import { useRef, type FormEvent, type RefObject } from "react";
 
-import { useTasksStore } from "../stores/tasks/TasksContext.jsx";
-import { useTaskModalStore } from "../stores/taskModal/TaskModalContext.jsx";
-import TaskModalForm from "./TaskModalForm.jsx";
+import { useTasksStore } from "../stores/tasks/TasksContext.js";
+import { useTaskModalStore } from "../stores/taskModal/TaskModalContext.js";
+import TaskModalForm from "./TaskModalForm.js";
+import type { TaskEntity } from "../types.js";
 
 export default function TaskModal() {
   const { dispatch, actions, tasks } = useTasksStore();
   const { setModalRef, setTask, task, close } = useTaskModalStore();
 
-  const dialogRef = useRef();
+  const dialogRef = useRef<HTMLDialogElement | null>(null);
 
   setModalRef(dialogRef);
 
-  const onChange = (updating) => {
+  const onChange = (updating: Partial<TaskEntity>) => {
     setTask({ ...task, ...updating });
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = (event: FormEvent) => {
+    event.preventDefault();
 
     dispatch(actions.update(task));
     close();

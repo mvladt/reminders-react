@@ -1,32 +1,37 @@
-import { useTasksStore } from "../stores/tasks/TasksContext.jsx";
-import { useTaskModalStore } from "../stores/taskModal/TaskModalContext.jsx";
+import { useTasksStore } from "../stores/tasks/TasksContext.js";
+import { useTaskModalStore } from "../stores/taskModal/TaskModalContext.js";
 import { createTask } from "../tools/helpers.js";
-import TaskForm from "./TaskForm.jsx";
+import TaskForm from "./TaskForm.js";
+import type { TaskEntity } from "../types.js";
 
-export default function TaskList({ isShow = false }) {
+type Props = {
+  isShow: boolean;
+};
+
+export default function TaskList({ isShow }: Props) {
   const { dispatch, actions, tasks, uncompleted } = useTasksStore();
   const { show } = useTaskModalStore();
 
   const name = "Задачи";
 
-  const onTaskChange = (task) => {
+  const onTaskChange = (task: TaskEntity): void => {
     dispatch(actions.update(task));
   };
 
-  const onTaskNew = () => {
+  const onTaskNew = (): void => {
     const task = createTask();
     dispatch(actions.create(task));
   };
 
-  const onTaskBlur = (task) => {
+  const onTaskBlur = (task: TaskEntity): void => {
     if (!task.title) dispatch(actions.delete(task));
   };
 
-  const onTaskDelete = (task) => {
+  const onTaskDelete = (task: TaskEntity): void => {
     dispatch(actions.delete(task));
   };
 
-  const onTaskModal = (task) => {
+  const onTaskModal = (task: TaskEntity): void => {
     show(task);
   };
 

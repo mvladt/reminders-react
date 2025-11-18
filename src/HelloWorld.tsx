@@ -1,7 +1,11 @@
 import { useState } from "react";
 
-export default function HelloWorld({ name }) {
-  const [count, setCount] = useState(1);
+type Props = {
+  name: string;
+};
+
+export default function HelloWorld({ name }: Props) {
+  const [count, setCount] = useState<number>(1);
   return (
     <div>
       <h1>
