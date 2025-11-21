@@ -4,9 +4,11 @@ import { useTasksStore } from "../stores/tasks/TasksContext";
 import TaskHeader from "./TaskHeader";
 import TaskList from "./TaskList";
 import TaskModal from "./TaskModal";
+import { useTasksGetters } from "../hooks/useTasksGetters";
 
 function TaskWrapper() {
-  const { deleteCompletedOnes, numberOfCompleted } = useTasksStore();
+  const { deleteCompletedOnes } = useTasksStore();
+  const { numberOfCompleted } = useTasksGetters();
 
   const [isShow, setShow] = useState(false);
 

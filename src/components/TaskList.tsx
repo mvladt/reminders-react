@@ -3,14 +3,15 @@ import { useTaskModalStore } from "../stores/taskModal/TaskModalContext.js";
 import { createTask } from "../tools/helpers.js";
 import TaskForm from "./TaskForm.js";
 import type { TaskEntity } from "../types.js";
+import { useTasksGetters } from "../hooks/useTasksGetters.js";
 
 type Props = {
   isShow: boolean;
 };
 
 export default function TaskList({ isShow }: Props) {
-  const { updateOne, createOne, deleteOne, tasks, uncompleted } =
-    useTasksStore();
+  const { updateOne, createOne, deleteOne } = useTasksStore();
+  const { sorted, uncompleted } = useTasksGetters();
   const { show } = useTaskModalStore();
 
   const name = "Задачи";
@@ -40,7 +41,7 @@ export default function TaskList({ isShow }: Props) {
     <div>
       <h2>{name}</h2>
       <ul>
-        {(isShow ? tasks : uncompleted).map((task) => (
+        {(isShow ? sorted : uncompleted).map((task) => (
           <li key={task.id}>
             <TaskForm
               task={task}

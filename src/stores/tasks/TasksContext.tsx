@@ -17,10 +17,6 @@ import type { TaskAction, TaskEntity } from "../../types.js";
 
 type ProvidedValue = {
   tasks: TaskEntity[];
-  completed: TaskEntity[];
-  uncompleted: TaskEntity[];
-  numberOfCompleted: number;
-
   createOne(task: TaskEntity): void;
   updateOne(task: Partial<TaskEntity>): void;
   deleteOne(task: Partial<TaskEntity>): void;
@@ -37,35 +33,10 @@ export function TasksProvider({ children }: PropsWithChildren) {
     initialTasks
   );
 
-  // Сначала незавершенные, потом завершенные.
-  const sortedTasks = useMemo(
-    () => [
-      ...tasks.filter((t) => !t.completed),
-      ...tasks.filter((t) => t.completed),
-    ],
-    [tasks]
-  );
-  const completedTasks = useMemo(
-    () => tasks.filter((t) => t.completed),
-    [tasks]
-  );
-  const uncompletedTasks = useMemo(
-    () => tasks.filter((t) => !t.completed),
-    [tasks]
-  );
-  const numberOfCompleted = useMemo(
-    () => tasks.filter((t) => t.completed).length || 0,
-    [tasks]
-  );
-
   useEffect(() => saveStateToLocal(tasks), [tasks]);
 
   const providedValue: ProvidedValue = {
-    tasks: sortedTasks,
-    completed: completedTasks,
-    uncompleted: uncompletedTasks,
-    numberOfCompleted,
-
+    tasks,
     createOne(task) {
       dispatch({ type: "create-one", value: task });
     },
