@@ -6,7 +6,7 @@ import TaskList from "./TaskList";
 import TaskModal from "./TaskModal";
 
 function TaskWrapper() {
-  const { dispatch, actions, numberOfCompleted } = useTasksStore();
+  const { deleteCompletedOnes, numberOfCompleted } = useTasksStore();
 
   const [isShow, setShow] = useState(false);
 
@@ -16,7 +16,7 @@ function TaskWrapper() {
 
   const onClearHeader = () => {
     if (confirm("Удалить все завершенные?")) {
-      dispatch(actions.deleteCompletedOnes());
+      deleteCompletedOnes();
     }
   };
 

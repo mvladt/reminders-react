@@ -9,26 +9,27 @@ type Props = {
 };
 
 export default function TaskList({ isShow }: Props) {
-  const { dispatch, actions, tasks, uncompleted } = useTasksStore();
+  const { updateOne, createOne, deleteOne, tasks, uncompleted } =
+    useTasksStore();
   const { show } = useTaskModalStore();
 
   const name = "Задачи";
 
   const onTaskChange = (task: TaskEntity): void => {
-    dispatch(actions.update(task));
+    updateOne(task);
   };
 
   const onTaskNew = (): void => {
     const task = createTask();
-    dispatch(actions.create(task));
+    createOne(task);
   };
 
   const onTaskBlur = (task: TaskEntity): void => {
-    if (!task.title) dispatch(actions.delete(task));
+    if (!task.title) deleteOne(task);
   };
 
   const onTaskDelete = (task: TaskEntity): void => {
-    dispatch(actions.delete(task));
+    deleteOne(task);
   };
 
   const onTaskModal = (task: TaskEntity): void => {

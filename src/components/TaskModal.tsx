@@ -6,7 +6,7 @@ import TaskModalForm from "./TaskModalForm.js";
 import type { TaskEntity } from "../types.js";
 
 export default function TaskModal() {
-  const { dispatch, actions, tasks } = useTasksStore();
+  const { updateOne } = useTasksStore();
   const { setModalRef, setTask, task, close } = useTaskModalStore();
 
   const dialogRef = useRef<HTMLDialogElement | null>(null);
@@ -20,7 +20,7 @@ export default function TaskModal() {
   const onSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    dispatch(actions.update(task));
+    updateOne(task);
     close();
   };
 

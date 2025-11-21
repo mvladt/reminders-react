@@ -11,6 +11,6 @@ export type TaskAction =
       type: "create-one";
       value: TaskEntity;
     }
-  | { type: "update-one"; value: TaskEntity }
-  | { type: "delete-one"; value: TaskEntity }
+  | { type: "update-one"; value: Partial<TaskEntity> }
+  | { type: "delete-one"; value: Partial<TaskEntity> }
   | { type: "delete-completed-ones" };

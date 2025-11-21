@@ -4,7 +4,6 @@ import {
   useEffect,
   useMemo,
   useReducer,
-  type ActionDispatch,
   type PropsWithChildren,
 } from "react";
 
@@ -12,18 +11,20 @@ import {
   getStateFromLocal,
   saveStateToLocal,
 } from "../../tools/tasksLocalStore.js";
-import tasksActions from "./tasksActions.js";
 import tasksReducer from "./tasksReducer.js";
 
 import type { TaskAction, TaskEntity } from "../../types.js";
 
 type ProvidedValue = {
-  dispatch: ActionDispatch<[TaskAction]>;
   tasks: TaskEntity[];
-  actions: typeof tasksActions;
   completed: TaskEntity[];
   uncompleted: TaskEntity[];
   numberOfCompleted: number;
+
+  createOne(task: TaskEntity): void;
+  updateOne(task: Partial<TaskEntity>): void;
+  deleteOne(task: Partial<TaskEntity>): void;
+  deleteCompletedOnes(): void;
 };
 
 const initialTasks = getStateFromLocal();
@@ -60,12 +61,23 @@ export function TasksProvider({ children }: PropsWithChildren) {
   useEffect(() => saveStateToLocal(tasks), [tasks]);
 
   const providedValue: ProvidedValue = {
-    dispatch,
     tasks: sortedTasks,
-    actions: tasksActions,
     completed: completedTasks,
     uncompleted: uncompletedTasks,
     numberOfCompleted,
+
+    createOne(task) {
+      dispatch({ type: "create-one", value: task });
+    },
+    updateOne(task) {
+      dispatch({ type: "update-one", value: task });
+    },
+    deleteOne(task) {
+      dispatch({ type: "delete-one", value: task });
+    },
+    deleteCompletedOnes() {
+      dispatch({ type: "delete-completed-ones" });
+    },
   };
 
   return (
